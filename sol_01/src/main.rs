@@ -1,24 +1,12 @@
 fn main() {
-    // unsigned integers
-    // u8, u16, u32, u64, u128
-    let unsigned : u8 = 100;
+    let arr = [100, 3, 5, 56 ];
 
-    // signed integers
-    // i8, i16, i32....
+    println!("Array {}, {}", arr[0] + arr[3], arr.len());
 
-    let signed : i32 = -783;
+    // print structure of array and other objects
+    println!("Array {:?}", arr);
 
-    // float: for decimals
-    // f8, f16....
-    let float = 0.96;
-
-    println!("unsigned: {}, signed {}, float {}", unsigned, signed, float + 0.96);
-
-    // char - can only be
-    let letter = "I am a letter";
-    let emoji = "\u{1F600}";
-    println!("letter {}, emoji {}", letter, emoji);
-
-    let is_true = false;
-    println!("Bool : {is_true}");
+    let other_array = [50; 20];
+    // prints 20 50s
+    println!("Other {:?}", other_array)
 }
