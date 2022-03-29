@@ -1,12 +1,16 @@
+// the previous codes are present in the README.md file
+
 fn main() {
-    let arr = [100, 3, 5, 56 ];
+    let arr = [1, 2, 4, 5, 6, 7];
+    let slice = &arr[1..4]; // starts from the 2nd element and prints till 4th one
 
-    println!("Array {}, {}", arr[0] + arr[3], arr.len());
+    println!("Slice: {:?}", slice); // Slice: [2, 4, 5]
 
-    // print structure of array and other objects
-    println!("Array {:?}", arr);
+    slicer(arr, slice);
+}
 
-    let other_array = [50; 20];
-    // prints 20 50s
-    println!("Other {:?}", other_array)
+fn slicer(arr: [u8; 6], slice: &[u8]) {
+    println!("Array {:?}", { arr });
+    println!("Slice: {:?}", { slice });
+    println!("{} {}", slice[0], slice[1])
 }
