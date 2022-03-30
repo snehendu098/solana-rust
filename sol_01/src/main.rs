@@ -1,16 +1,19 @@
 // the previous codes are present in the README.md file
 
 fn main() {
-    let arr = [1, 2, 4, 5, 6, 7];
-    let slice = &arr[1..4]; // starts from the 2nd element and prints till 4th one
+    let str: &str = "Hello World";
+    let mut string: String = String::from("Hello World");
 
-    println!("Slice: {:?}", slice); // Slice: [2, 4, 5]
+    println!("{:?}", string);
 
-    slicer(arr, slice);
-}
+    // slicing a string from 0th to 6th index
+    let slice = &string[..6];
+    println!("{:?}", slice);
 
-fn slicer(arr: [u8; 6], slice: &[u8]) {
-    println!("Array {:?}", { arr });
-    println!("Slice: {:?}", { slice });
-    println!("{} {}", slice[0], slice[1])
+    // pushing a char value at the end of the string
+    let popped = string.push('1');
+    println!("{:?}", popped);
+
+    let replaced = string.replace("Hello", "Bye");
+    println!("{}", replaced)
 }
