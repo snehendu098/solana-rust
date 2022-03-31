@@ -1,4 +1,4 @@
-# Install Rust
+## Install Rust
 
 ### Create a file and write basic hello world
 
@@ -21,7 +21,7 @@ A file with the corresponding name of file in linux
 Run that file
 `./<NAME_OF_FILE>`
 
-# Cargo
+## Cargo
 
 In terminal
 `cargo new <FOLDER_NAME>`
@@ -189,5 +189,273 @@ fn main() {
 
     let replaced = string.replace("Hello", "Bye");
     println!("{}", replaced)
+}
+```
+
+_String.replace must be stored if you want to mutate with the actual one, use -> string=string.replace("Hello", "Bye)_
+
+## Conditionals
+
+Conditionals are the `if else` statements
+
+```
+fn main() {
+    let mango = 1;
+
+    if mango % 2 == 0 {
+        println!("Even")
+    } else if mango % 2 != 0 {
+        println!("Odd")
+    } else {
+        println!("doesn't exist")
+    }
+}
+```
+
+## Loops
+
+### For Loops
+
+```
+fn main() {
+    for i in 0..5 {
+        println!("{}", i);
+    }
+}
+```
+
+### While Loops
+
+```
+fn main() {
+    println!("Decreasing");
+    decreasing();
+
+    println!("Increasing");
+    increasing()
+}
+
+fn decreasing() {
+    let mut i = 0;
+
+    while i > -6 {
+        println!("{}", i);
+        i -= 1;
+
+        if i == -3 {
+            println!("exit");
+            break;
+        }
+    }
+}
+
+fn increasing() {
+    let mut i = 0;
+
+    while i < 6 {
+        println!("{}", i);
+        i += 1;
+
+        if i == 3 {
+            println!("contnue");
+            continue;
+        }
+    }
+}
+
+```
+
+`break` keyword breaks the loop while the `continue` keyword continues to execute the loop
+
+## Matches (Switch statement)
+
+These are mainly `switch` statements in rust
+
+```
+fn main() {
+    let i = 5;
+
+    match i {
+        0 => println!("0"), // ";"" is replaced by ",""
+        1 | 2 => println!("1,2"),
+        3..=6 => println!("1 - 6"), // 3 to 6 not 5
+
+        _ => println!("deafult"), // no case matches
+    }
+}
+```
+
+## Structs (Classes)
+
+There are 3 parts
+
+1. Declearing struct
+2. Declearing Functions in Struct
+3. Using the struct
+
+```
+// 1. Declearing Struct
+struct Bird {
+    name: String,
+    attack: u16,
+    id: u64,
+}
+
+// 2. Declearing Functions in Struct
+impl Bird {
+    fn show_id(&self) {
+        println!("{}", self.id);
+    }
+
+    fn show_all(&self) {
+        println!(
+            " Id: {} \n Name: {} \n Attck: {}",
+            self.id, self.name, self.attack
+        );
+    }
+}
+
+// 3. Using the struct
+fn main() {
+    let name = String::from("Bird 1");
+
+    let bird = Bird {
+        name, // equivalent to name: name
+        attack: 2,
+        id: 90,
+    };
+
+    bird.show_id();
+    bird.show_all()
+}
+```
+
+4. Declearing Traits
+
+```
+// 1. Declearing Struct
+struct Bird {
+    name: String,
+    attack: u16,
+    id: u64,
+}
+
+// 2. Declearing Functions in Struct
+impl Bird {
+    fn show_id(&self) {
+        println!("{}", self.id);
+    }
+
+    fn show_all(&self) {
+        println!(
+            " Id: {} \n Name: {} \n Attack: {}",
+            self.id, self.name, self.attack
+        );
+    }
+}
+
+// 3. Using the struct
+fn main() {
+    let name = String::from("Bird 1");
+
+    let bird = Bird {
+        name, // equivalent to name: name
+        attack: 2,
+        id: 90,
+    };
+
+    bird.show_id();
+    bird.show_all();
+
+    // 6. Using traits
+    println!("\n {} \n {}", bird.can_fly(), bird.is_animal())
+}
+
+// 4. Declearing Traits
+trait Animal {
+    fn can_fly(&self) -> bool;
+    fn is_animal(&self) -> bool {
+        true
+    }
+}
+
+// 5. Implementing traits for bird
+impl Animal for Bird {
+    fn can_fly(&self) -> bool {
+        true
+    }
+}
+```
+
+## Enums
+
+1. Creating an Enum
+2. Declearing an Enum
+3. using an Enum
+
+```
+fn main() {
+    // 2. Declearing an Enum
+    let a = MyEnum::Color(String::from("#64588"));
+    let b = MyEnum::Move(true);
+    let c = MyEnum::Position { x: 19, y: -70 };
+
+    // 3. Using an Enum
+    if let MyEnum::Move(new) = b {
+        println!("Move: {}", new);
+    }
+
+    if let MyEnum::Position { x, y } = c {
+        println!("Move to: \n X: {}\n Y: {}", x, y);
+    }
+
+    if let MyEnum::Color(val) = a {
+        println!("Colour the place: {}", val);
+    }
+}
+
+// 1. Creating an Enum
+#[derive(Debug)]
+enum MyEnum {
+    Move(bool),
+    Position { x: i8, y: i8 },
+    Color(String),
+}
+```
+
+### Enums vs structs
+
+Enums are used for defining custom types. Here's an example which shows an convenient usecase of Enums in Structs. There are 2 kinds of IP addresses. One is v4 and v6. In structs, we want to store the IP addresses and their kinds also
+
+```
+fn main() {
+    let address = String::from("127.0.0.108");
+
+    // 3. Declearing struct with Enum
+    let ip = IpAddr {
+        kind: IpAddrKind::V4,
+        address,
+    };
+
+    let ip2 = IpAddr {
+        kind: IpAddrKind::V6,
+        address: String::from("190.2873.189"),
+    };
+
+    println!("Type: {:?},\nAddress:{}", ip.kind, ip.address);
+    println!("\nType: {:?},\nAddress:{}", ip2.kind, ip2.address);
+}
+
+// 1. Creating an Enum
+#[derive(Debug)]
+enum IpAddrKind {
+    V4,
+    V6,
+}
+
+// 2. Using the struct
+struct IpAddr {
+    kind: IpAddrKind,
+    address: String,
 }
 ```

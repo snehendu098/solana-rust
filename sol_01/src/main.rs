@@ -1,19 +1,32 @@
 // the previous codes are present in the README.md file
 
 fn main() {
-    let str: &str = "Hello World";
-    let mut string: String = String::from("Hello World");
+    let address = String::from("127.0.0.108");
 
-    println!("{:?}", string);
+    // 3. Declearing struct with Enum
+    let ip = IpAddr {
+        kind: IpAddrKind::V4,
+        address,
+    };
 
-    // slicing a string from 0th to 6th index
-    let slice = &string[..6];
-    println!("{:?}", slice);
+    let ip2 = IpAddr {
+        kind: IpAddrKind::V6,
+        address: String::from("190.2873.189"),
+    };
 
-    // pushing a char value at the end of the string
-    let popped = string.push('1');
-    println!("{:?}", popped);
+    println!("Type: {:?},\nAddress:{}", ip.kind, ip.address);
+    println!("\nType: {:?},\nAddress:{}", ip2.kind, ip2.address);
+}
 
-    let replaced = string.replace("Hello", "Bye");
-    println!("{}", replaced)
+// 1. Creating an Enum
+#[derive(Debug)]
+enum IpAddrKind {
+    V4,
+    V6,
+}
+
+// 2. Using the struct
+struct IpAddr {
+    kind: IpAddrKind,
+    address: String,
 }
