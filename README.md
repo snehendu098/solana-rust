@@ -459,3 +459,79 @@ struct IpAddr {
     address: String,
 }
 ```
+
+## Vectors (dynamic arrays)
+
+In rust, arrays are not dynamic like javascript or python. The arrays need to have a specific number of elements in rust. To solve this problem, rust comes up with Vectors. These are arrays which don't actually have a specific length at first. `array.push()` is not available in Rust.
+
+```
+fn main() {
+    let mut vec: Vec<i64> = vec![];
+
+    println!("{}", vec.len());
+
+    println!("{:?}", vec);
+    vec.push(90);
+    vec.push(10);
+    vec.push(60);
+    println!("{:?}", vec);
+    println!("{}", vec.len());
+}
+```
+
+## Hashmaps
+
+It stores value in key, value pairs. But the values and keys for each case should be of a specific type
+
+```
+use std::collections::HashMap; // <- Important
+
+fn main() {
+    let mut map = HashMap::new();
+
+    map.insert(0, "hi there");
+    map.insert(1, "hi 2");
+    println!("{:?}", map);
+    match map.get(&0) {
+        Some(val) => println!("{}", val),
+        _ => println!("Default"),
+    }
+    match map.get(&2) {
+        Some(str) => println!("{}", str),
+        _error => println!("Default"), // this is equivalent to `_ => println!("Default"),`
+    }
+    map.remove(&0);
+    println!("{:?}", map);
+}
+```
+
+## Options
+
+Options are commonly paired with pattern matching to query the presence of a value and take action.
+
+Option returns 2 things:
+
+1. None: If the query is not applicable
+2. Some: If the query is applicable and the outcome of it
+
+```
+fn divider(numerator: f64, denominator: f64) -> Option<f64> {
+    if denominator == 0.0 {
+        None
+    } else {
+        Some(numerator / denominator)
+    }
+}
+
+fn main() {
+    // let res = divider(0.1, 0.0);
+    let res = divider(12.02, 10.60);
+
+    println!("{:?}", res);
+
+    match res {
+        Some(val) => println!("{}", val),
+        None => println!("Not possible"),
+    }
+}
+```
