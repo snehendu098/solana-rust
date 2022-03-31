@@ -1,21 +1,19 @@
 // the previous codes are present in the README.md file
 
-fn divider(numerator: f64, denominator: f64) -> Option<f64> {
-    if denominator == 0.0 {
-        None
+#[derive(Debug)]
+enum MyError {
+    Error1,
+}
+
+fn divider(numerator: i64, denominator: i64) -> Result<i64, MyError> {
+    if numerator % denominator != 0 {
+        Err(MyError::Error1)
     } else {
-        Some(numerator / denominator)
+        Ok(numerator / denominator)
     }
 }
 
 fn main() {
-    // let res = divider(0.1, 0.0);
-    let res = divider(12.02, 10.60);
-
-    println!("{:?}", res);
-
-    match res {
-        Some(val) => println!("{}", val),
-        None => println!("Not possible"),
-    }
+    let res = divider(34, 7);
+    println!("{}", res.unwrap_or(100))
 }

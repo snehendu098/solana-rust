@@ -522,7 +522,11 @@ fn divider(numerator: f64, denominator: f64) -> Option<f64> {
         Some(numerator / denominator)
     }
 }
+```
 
+### Way 1
+
+```
 fn main() {
     // let res = divider(0.1, 0.0);
     let res = divider(12.02, 10.60);
@@ -533,5 +537,103 @@ fn main() {
         Some(val) => println!("{}", val),
         None => println!("Not possible"),
     }
+}
+```
+
+### Way 2
+
+```
+fn main() {
+    // let res = divider(0.1, 0.0);
+    let res = divider(12.00, 10.);
+
+    println!("{:?}", res);
+
+    match res {
+        Some(val) => println!("{}", val),
+        None => println!("Not possible"),
+    }
+
+    // Unwrap function makes the Some to unwrap the actual value
+    println!("{:?}, \nUnwrap: {}", res, res.unwrap());
+
+    // Unwrap for None
+    let res2 = divider(293.3, 0.0);
+    println!("{:?} \nUnwrapped {}", res2, res2.unwrap());
+    // returns: 'main' panicked at 'called `Option::unwrap()` on a `None` value'
+}
+```
+
+## Result
+
+Results are an upgraded version of Option. In Option, if condition doesn't match, we send `None` which means nothing. In result, when an Error Occurs, we can use custom errors which can even be of custom types.
+
+In option, we can return `Some()` and `None`. In result, we pass `Ok()` and `Err()`
+
+```
+#[derive(Debug)]
+enum MyError {
+    Error1,
+}
+
+// While Declearing result, you have to pass a valid value for return and the Error Type within `<>`
+fn divider(numerator: i64, denominator: i64) -> Result<i64, MyError> {
+    if denominator == 0 {
+        Err(MyError::Error1)
+    } else {
+        Ok(numerator / denominator)
+    }
+}
+
+fn main() {
+    let res = divider(20, 5);
+
+    // .is_ok() and .is_err() is automatically provided by Results in Rust
+    if res.is_ok() {
+
+        println!("{}", res.unwrap())
+
+    } else if res.is_err() {
+
+        println!("{:?}", res.unwrap_err())
+        // returns Error1 when denominator is 0
+
+    }
+}
+```
+
+**You can also use `match`**
+
+```
+fn main() {
+    let res = divider(20, 0);
+
+    match res {
+        Ok(data) => println!("{}", data),
+        Err(data) => println!("{:?}", data),
+    }
+}
+```
+
+`unwrap_or()` can also be used to return a default value when the result is not of type `Ok()`
+
+```
+#[derive(Debug)]
+enum MyError {
+    Error1,
+}
+
+fn divider(numerator: i64, denominator: i64) -> Result<i64, MyError> {
+    if numerator % denominator != 0 {
+        Err(MyError::Error1)
+    } else {
+        Ok(numerator / denominator)
+    }
+}
+
+fn main() {
+    let res = divider(34, 7);
+    // if condition is not fulfilled, it will return 100
+    println!("{}", res.unwrap_or(100))
 }
 ```
